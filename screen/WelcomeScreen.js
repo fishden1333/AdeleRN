@@ -21,6 +21,18 @@ export default class WelcomeScreen extends React.Component {
     this.loginUser = this.loginUser.bind(this);
     this.signUpUser = this.signUpUser.bind(this);
   }
+
+  componentDidMount() {
+    const { navigate } = this.props.navigation;
+    // Listening for auth state changes.
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in. Auto login.
+        navigate('DrawerStack');
+      }
+    })
+  }
+
   signUpUser = (email, password, name, gender, birthday) => {
       firebase.auth().createUserWithEmailAndPassword(email, password).then(()=>{
         let user = firebase.auth().currentUser;

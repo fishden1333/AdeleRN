@@ -1,8 +1,8 @@
 import React from 'react';
-import {Button,Icon } from 'native-base';
+import {Button,Icon,Label } from 'native-base';
 import * as firebase from 'firebase';
 import {StyleSheet, AppRegistry} from 'react-native';
-import { StackNavigator, DrawerNavigator, DrawerActions } from 'react-navigation';
+import { StackNavigator, TabNavigator, DrawerNavigator, DrawerActions } from 'react-navigation';
 import WelcomeScreen  from './screen/WelcomeScreen';
 import LoginScreen  from './screen/LoginScreen';
 import SignUpScreen  from './screen/SignUpScreen';
@@ -49,26 +49,25 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
-const Drawer = new DrawerNavigator({
-  NewsScreen: {screen: NewsScreen},
-  MainScreen : {screen: MainScreen},
-  LoginScreen : {screen: LoginScreen},
-  FriendScreen : {screen: FriendScreen},
-  SignUpScreen: {screen: SignUpScreen},
-  EditProfileScreen: {screen: EditProfileScreen}
-},{
-  contentComponent: DrawerContainer
+const Drawer = new TabNavigator({
+  News: {screen: NewsScreen},
+  Article : {screen: MainScreen},
+  Messenger : {screen: LoginScreen},
+  Friends : {screen: FriendScreen},
+  Call: {screen: SignUpScreen},
+  Profile: {screen: EditProfileScreen}
 }
 )
+
+const DrawerMenu = new DrawerNavigator({
+  Friend : {screen: FriendScreen},
+},{
+    contentComponent: DrawerContainer
+  }
+)
+
 const MenuButton = (navigation) => (
-  <Button
-    transparent
-    onPress = {() => navigation.dispatch(DrawerActions.openDrawer())}
-  >
-    <Icon
-      name="menu"
-      style={styles.icon_style} />
-  </Button>
+  <Label>.</Label>
 );
 const DrawerStack = new StackNavigator({
   Drawer : {screen: Drawer},

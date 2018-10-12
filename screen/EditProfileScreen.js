@@ -22,6 +22,18 @@ export default class EditProfileScreen extends React.Component {
       birthday: birthday
     });
   }
+  logoutUser = () => {
+    const { pop } = this.props.navigation;
+    try {
+      firebase.auth().signOut().then(() => {
+        pop();
+        console.log("Log out!")
+      })
+    }
+    catch(error) {
+      console.log(error.toString())
+    }
+  }
   render() {
     return (
         <Container style = {styles.container}>
@@ -80,7 +92,7 @@ export default class EditProfileScreen extends React.Component {
             onDateChange = {(date) => {this.setState({birthday: date})}}
           />
 
-          <Button style = {{ marginTop: 10 }}
+          <Button
             full
             rounded
             warning
@@ -88,6 +100,16 @@ export default class EditProfileScreen extends React.Component {
             onPress = {() => {this.sendSurvey(this.state.name, this.state.gender, this.state.birthday); this.props.navigation.navigate('MainScreen');}}
           >
             <Text style = {{ color: 'white' }}>Send answer</Text>
+          </Button>
+
+          <Button
+            full
+            rounded
+            danger
+            style={styles.profile_button}
+            onPress = {() => {this.logoutUser(); this.props.navigation.navigate('WelcomScreen');}}
+          >
+            <Text style = {{ color: 'white' }}>Logout</Text>
           </Button>
 
       </Container>
@@ -114,6 +136,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   profile_button: {
-    marginTop: 100,
+    marginTop: 30,
   }
 });

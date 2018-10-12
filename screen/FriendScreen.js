@@ -40,7 +40,7 @@ export default class FriendScreen extends Component {
 
   listenForItems(friendsRef) {
 
-    
+
 
     var user = firebase.auth().currentUser;
 
@@ -56,7 +56,7 @@ export default class FriendScreen extends Component {
         loading: false
       });
     });
-    
+
   }
 
   componentDidMount() {
@@ -127,6 +127,7 @@ export default class FriendScreen extends Component {
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
+          enableEmptySections = {true}
         />
         <Spinner visible={this.state.loading} />
       </View>
